@@ -4,3 +4,4 @@ scikit-learn
 pandas
 mlflow
 pytest
+httpx
