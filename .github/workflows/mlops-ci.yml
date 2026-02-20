@@ -32,5 +32,9 @@ jobs:
         run: |
           python src/train.py
 
+      - name: Run API tests
+        run: |
+          pytest -v
+
       - name: Build Docker image
         run: docker build -t spam-mlops .

@@ -33,3 +33,7 @@ def predict_spam(data: TextIn):
 @app.get("/health")
 def health():
     return {"status": "ok", "model_version": "v1.0.0"}
+
+@app.get("/")
+def health():
+    return {"status": "ok"}

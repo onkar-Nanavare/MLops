@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# ML artifacts
+mlruns/
+data/
+
+# Pytest
+.pytest_cache/
+
+# OS junk
+.DS_Store
