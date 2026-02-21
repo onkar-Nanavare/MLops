@@ -21,6 +21,10 @@ df = df[df["text"].str.strip() != ""]
 X = df["text"]
 y = df["label"].map({"ham": 0, "spam": 1})
 
+if y.isnull().any():
+    bad_labels = df.loc[y.isnull(), "label"].unique()
+    raise Exception(f"Unknown labels found in dataset: {bad_labels}")
+
 # Split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42

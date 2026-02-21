@@ -18,7 +18,7 @@ print(f"Removed {before - after} bad rows")
 if df["label"].nunique() < 2:
     raise Exception("Need at least 2 classes (spam + ham)")
 
-# Optional: save cleaned data for training
-df.to_csv("data/clean.csv", index=False)
+# Save cleaned data for training
+df.to_csv("data/clean_validated.csv", index=False)
 
-print("Data validation passed ")
+print("Data validation passed")

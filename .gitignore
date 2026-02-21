@@ -6,7 +6,7 @@ venv/
 
 # ML artifacts
 mlruns/
-data/
+
 
 # Pytest
 .pytest_cache/
