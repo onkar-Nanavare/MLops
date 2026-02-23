@@ -37,19 +37,21 @@ jobs:
         run: python src/train.py
 
       - name: Upload model to Hugging Face Hub
-        env:
-          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-        run: |
-          python - <<EOF
-          from huggingface_hub import hf_hub_upload
-          hf_hub_upload(
-              token="${HUGGINGFACE_TOKEN}",
-              repo_id="your-username/spam-mlops-model",
-              path_or_fileobj="model.pkl",
-              path_in_repo="model.pkl",
-              repo_type="model"
-          )
-          EOF
+  env:
+    HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+  run: |
+    pip install --upgrade huggingface_hub
+    python - <<EOF
+    from huggingface_hub import HfApi
+    api = HfApi()
+    api.upload_file(
+        path_or_fileobj="model.pkl",
+        path_in_repo="model.pkl",
+        repo_id="your-username/spam-mlops-model",
+        repo_type="model",
+        token="${HUGGINGFACE_TOKEN}"
+    )
+    EOF
 
       - name: Evaluate Model
         run: python src/evaluate.py
