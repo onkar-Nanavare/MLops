@@ -6,11 +6,15 @@ from pathlib import Path
 app = FastAPI()
 
 # Load model relative to container root (/app)
-MODEL_PATH = Path("model.pkl")
-VECT_PATH = Path("vectorizer.pkl")
+from pathlib import Path
+import joblib
+
+MODEL_PATH = Path("/models/model.pkl")
+VECT_PATH = Path("/models/vectorizer.pkl")
 
 model = joblib.load(MODEL_PATH)
 vectorizer = joblib.load(VECT_PATH)
+
 
 class TextIn(BaseModel):
     text: str
