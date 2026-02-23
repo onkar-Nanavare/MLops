@@ -4,5 +4,4 @@ data
 .git
 .gitignore
 __pycache__
-*.pkl
 *.joblib
