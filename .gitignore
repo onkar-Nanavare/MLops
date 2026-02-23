@@ -12,4 +12,13 @@ mlruns/
 .pytest_cache/
 
 # OS junk
-.DS_Store   
+.DS_Store
+# OS
+.DS_Store
+Thumbs.db   
+
+
+# ML artifacts
+model.pkl
+vectorizer.pkl
+metrics.json
