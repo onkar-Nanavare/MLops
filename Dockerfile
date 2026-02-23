@@ -7,8 +7,12 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy everything
-COPY . .
+# Copy app code
+COPY src/ ./src/
+
+# Copy trained model files
+COPY model.pkl .
+COPY vectorizer.pkl .
 
 EXPOSE 8000
 

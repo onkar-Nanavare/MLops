@@ -18,7 +18,4 @@ mlruns/
 Thumbs.db   
 
 
-# ML artifacts
-model.pkl
-vectorizer.pkl
-metrics.json
+

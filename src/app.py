@@ -5,10 +5,9 @@ from pathlib import Path
 
 app = FastAPI()
 
-BASE_DIR = Path(__file__).resolve().parent.parent  # spam-mlops root
-
-MODEL_PATH = BASE_DIR / "model.pkl"
-VECT_PATH = BASE_DIR / "vectorizer.pkl"
+# Load model relative to container root (/app)
+MODEL_PATH = Path("model.pkl")
+VECT_PATH = Path("vectorizer.pkl")
 
 model = joblib.load(MODEL_PATH)
 vectorizer = joblib.load(VECT_PATH)
@@ -21,8 +20,7 @@ def predict_spam(data: TextIn):
     vec = vectorizer.transform([data.text])
     pred = model.predict(vec)[0]
 
-    pred = int(pred)   
-
+    pred = int(pred)
     label = "spam" if pred == 1 else "ham"
 
     return {
@@ -35,5 +33,5 @@ def health():
     return {"status": "ok", "model_version": "v1.0.0"}
 
 @app.get("/")
-def health():
+def root():
     return {"status": "ok"}
