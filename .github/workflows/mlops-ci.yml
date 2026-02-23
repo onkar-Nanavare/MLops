@@ -1,13 +1,14 @@
 name: MLOps CI Pipeline
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["MLOps Training Pipeline"]
+    types:
+      - completed
 
 jobs:
   build-test-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +26,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run API tests
-        run: |
-          pytest -v
+        run: pytest -v
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -35,9 +35,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: |
-          docker build -t onkarnanavare/spam-mlops:latest .
+        run: docker build -t onkarnanavare/spam-mlops:latest .
 
       - name: Push Docker image
-        run: |
-          docker push onkarnanavare/spam-mlops:latest
+        run: docker push onkarnanavare/spam-mlops:latest
