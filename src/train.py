@@ -85,4 +85,4 @@ joblib.dump(vectorizer, "vectorizer.pkl")
 with open("metrics.json", "w") as f:
     json.dump({"accuracy": acc}, f)
 
-print(f"Training completed Successfully. Accuracy: {acc:.4f}")
+print(f"Training Completed Successfully. Accuracy: {acc:.4f}")
