@@ -54,7 +54,7 @@ jobs:
       # -------------------------
       # Upload Model to Hugging Face Hub
       # -------------------------
-      - name: Upload Model
+      - name: Upload Model to Hugging Face Hub
         env:
           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: python src/upload_model.py
