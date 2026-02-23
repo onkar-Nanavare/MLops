@@ -29,7 +29,10 @@ jobs:
           pip install -r requirements.txt
           pip install huggingface_hub
 
-      
+      # Step 3a: Debug repo_id
+      - name: Debug repo_id
+        run: echo "Using Hugging Face repo_id: Onkar000007/spam-mlops-model"
+
       # Step 4: Test Hugging Face repo access
       - name: Test Hugging Face repo access
         env:
