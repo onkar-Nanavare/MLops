@@ -1,18 +1,25 @@
 from fastapi.testclient import TestClient
 from src.app import app
+import src.app as app_module
 
-client = TestClient(app)
+class DummyVectorizer:
+    def transform(self, texts):
+        return [[0.1, 0.2]]
 
+class DummyModel:
+    def predict(self, X):
+        return [1]
 
-def test_health_check():
-    response = client.get("/")
-    assert response.status_code == 200
+def test_health():
+    client = TestClient(app)
+    r = client.get("/health")
+    assert r.status_code == 200
 
+def test_predict(monkeypatch):
+    monkeypatch.setattr(app_module, "model", DummyModel())
+    monkeypatch.setattr(app_module, "vectorizer", DummyVectorizer())
 
-def test_predict_endpoint():
-    payload = {"text": "Congratulations! You won a free prize"}
-
-    response = client.post("/predict", json=payload)
-
-    assert response.status_code == 200
-    assert "prediction" in response.json()
+    client = TestClient(app)
+    r = client.post("/predict", json={"text": "free money"})
+    assert r.status_code == 200
+    assert r.json()["prediction"] == "spam"
