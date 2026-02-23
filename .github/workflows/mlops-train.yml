@@ -4,10 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - "data/**"
+      - "data/**"                  # your data directory
       - "src/train.py"
       - "src/data_validate.py"
       - "src/evaluate.py"
+      - "src/app.py"
       - "requirements.txt"
 
 jobs:
@@ -27,15 +28,28 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install huggingface_hub
 
       - name: Validate Data
-        run: |
-          python src/data_validate.py
+        run: python src/data_validate.py
 
       - name: Train Model
+        run: python src/train.py
+
+      - name: Upload model to Hugging Face Hub
+        env:
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
-          python src/train.py
+          python - <<EOF
+          from huggingface_hub import hf_hub_upload
+          hf_hub_upload(
+              token="${HUGGINGFACE_TOKEN}",
+              repo_id="your-username/spam-mlops-model",
+              path_or_fileobj="model.pkl",
+              path_in_repo="model.pkl",
+              repo_type="model"
+          )
+          EOF
 
       - name: Evaluate Model
-        run: |
-          python src/evaluate.py
+        run: python src/evaluate.py
