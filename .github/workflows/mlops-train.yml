@@ -37,7 +37,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install --upgrade huggingface_hub
+          pip install --upgrade huggingface_hub==0.17.3
 
       # -------------------------
       # Validate Data
@@ -54,32 +54,10 @@ jobs:
       # -------------------------
       # Upload Model to Hugging Face Hub
       # -------------------------
-      - name: Upload model to Hugging Face Hub
+      - name: Upload Model
         env:
           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-        run: |
-          python - <<EOF
-import os
-from huggingface_hub import HfApi
-
-# Path to model.pkl (output from train.py)
-model_file = "model.pkl"
-
-# Hugging Face token from GitHub secrets
-hf_token = os.environ["HUGGINGFACE_TOKEN"]
-
-# Initialize Hugging Face API
-api = HfApi()
-
-# Upload the model file to your Hugging Face repo
-api.upload_file(
-    path_or_fileobj=model_file,
-    path_in_repo="model.pkl",
-    repo_id="your-username/spam-mlops-model",
-    repo_type="model",
-    token=hf_token
-)
-EOF
+        run: python src/upload_model.py
 
       # -------------------------
       # Evaluate Model
