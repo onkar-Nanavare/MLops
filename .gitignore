@@ -18,4 +18,6 @@ mlruns/
 Thumbs.db   
 
 
-
+*.pkl
+models/
+metrics.json
