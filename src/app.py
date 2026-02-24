@@ -83,7 +83,7 @@ def startup_event():
 # =====================
 # Versioned API
 # =====================
-@app.post("/api/v1/predict")
+@app.post("/v1/predict")
 def predict_spam(data: TextIn):
     load_artifacts()
     vec = vectorizer.transform([data.text])
