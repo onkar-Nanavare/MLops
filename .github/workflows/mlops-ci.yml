@@ -29,8 +29,6 @@ jobs:
           pip install -r requirements.txt
           pip install huggingface_hub
 
-      
-
       # Step 4: Test Hugging Face repo access
       - name: Test Hugging Face repo access
         env:
@@ -42,32 +40,39 @@ jobs:
           try:
               files = list_repo_files(repo_id, token="${HUGGINGFACE_TOKEN}")
               print("Files in repo:", files)
-              if "model.pkl" not in files:
-                  raise FileNotFoundError("model.pkl not found in the repo!")
+
+              required_files = ["model.pkl", "vectorizer.pkl"]
+              for f in required_files:
+                  if f not in files:
+                      raise FileNotFoundError(f"{f} not found in the repo!")
+
           except Exception as e:
               print(f"Error accessing Hugging Face repo: {e}")
               exit(1)
           EOF
 
-      # Step 5: Download model from Hugging Face Hub
-      - name: Download model from Hugging Face Hub
+      # Step 5: Download model + vectorizer from Hugging Face Hub
+      - name: Download model artifacts from Hugging Face Hub
         env:
           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
           python - <<EOF
           from huggingface_hub import hf_hub_download
+
           repo_id = "Onkar000007/spam-mlops-model"
-          filename = "model.pkl"
-          try:
-              model_path = hf_hub_download(
-                  repo_id=repo_id,
-                  filename=filename,
-                  token="${HUGGINGFACE_TOKEN}"
-              )
-              print(f"Model downloaded to {model_path}")
-          except Exception as e:
-              print(f"Failed to download model: {e}")
-              exit(1)
+          files = ["model.pkl", "vectorizer.pkl"]
+
+          for filename in files:
+              try:
+                  path = hf_hub_download(
+                      repo_id=repo_id,
+                      filename=filename,
+                      token="${HUGGINGFACE_TOKEN}"
+                  )
+                  print(f"Downloaded {filename} to {path}")
+              except Exception as e:
+                  print(f"Failed to download {filename}: {e}")
+                  exit(1)
           EOF
 
       # Step 6: Run API tests
