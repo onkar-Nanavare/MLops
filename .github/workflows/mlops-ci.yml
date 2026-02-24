@@ -88,8 +88,8 @@ jobs:
 
       # Step 8: Build Docker image
       - name: Build Docker image
-        run: docker build -t onkarnanavare/spam-mlops:latest .
+        run: docker build -t onkarnanavare/spam-mlops:v1.0.0 .
 
       # Step 9: Push Docker image
       - name: Push Docker image
-        run: docker push onkarnanavare/spam-mlops:latest
+        run: docker push onkarnanavare/spam-mlops:v1.0.0

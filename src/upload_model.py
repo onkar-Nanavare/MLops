@@ -21,7 +21,8 @@ api.upload_file(
     path_in_repo="model.pkl",
     repo_id="Onkar000007/spam-mlops-model",
     repo_type="model",
-    token=hf_token
+    token=hf_token,
+    commit_message="Upload model artifacts v1.0.0"
 )
 
 api.upload_file(
@@ -29,7 +30,8 @@ api.upload_file(
     path_in_repo="vectorizer.pkl",
     repo_id="Onkar000007/spam-mlops-model",
     repo_type="model",
-    token=hf_token
+    token=hf_token,
+    commit_message="Upload model artifacts v1.0.0"
 )
 
-print("Model & Vectorizer uploaded successfully!")
+print("Model & Vectorizer uploaded successfully as v1.0.0")
