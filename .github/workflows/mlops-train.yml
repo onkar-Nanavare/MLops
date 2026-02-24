@@ -10,6 +10,8 @@ on:
       - "src/evaluate.py"
       - "src/app.py"
       - "requirements.txt"
+  schedule:
+    - cron: '0 0 * * *'  # Optional: retrain daily at midnight UTC
 
 jobs:
   train-validate-evaluate:
@@ -40,15 +42,21 @@ jobs:
           pip install --upgrade huggingface_hub==0.17.3
 
       # -------------------------
-      # Validate Data
+      # Validate Data (local or HF)
       # -------------------------
       - name: Validate Data
+        env:
+          DATA_SOURCE: hf  # Set to "local" if you want local CSV, "hf" for Hugging Face
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: python src/data_validate.py
 
       # -------------------------
       # Train Model
       # -------------------------
       - name: Train Model
+        env:
+          DATA_SOURCE: hf
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: python src/train.py
 
       # -------------------------
