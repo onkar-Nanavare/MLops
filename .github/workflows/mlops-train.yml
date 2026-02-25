@@ -10,8 +10,9 @@ on:
       - "src/evaluate.py"
       - "src/app.py"
       - "requirements.txt"
+
   schedule:
-  - cron: '5 9 * * *'
+    - cron: '30 9 * * *'
 
 jobs:
   train-validate-evaluate:
