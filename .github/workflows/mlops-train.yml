@@ -12,7 +12,7 @@ on:
       - "requirements.txt"
 
   schedule:
-    - cron: '45 9 * * *'
+    - cron: '30 3 * * *'
   workflow_dispatch:
 
 jobs:
