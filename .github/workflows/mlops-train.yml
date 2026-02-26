@@ -13,8 +13,9 @@ on:
       - "requirements.txt"
 
   schedule:
-    - cron: '30 3 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:
+  # force re-register
 
 jobs:
   train-validate-evaluate:
