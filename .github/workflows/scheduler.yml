@@ -1,8 +1,9 @@
+# force re-register
 name: Daily Scheduler
 
 on:
   schedule:
-    - cron: '45 5 * * *' 
+    - cron: '15 6 * * *' 
   workflow_dispatch:
 
 jobs:
