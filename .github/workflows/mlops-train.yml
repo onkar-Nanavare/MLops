@@ -1,3 +1,4 @@
+
 name: MLOps Training Pipeline
 
 on:
@@ -11,12 +12,15 @@ on:
       - "src/app.py"
       - "requirements.txt"
 
+
   workflow_run:
     workflows: ["Daily Scheduler"]   
     types:
       - completed
-   
+ 
+
   workflow_dispatch:
+
 
 jobs:
   train-validate-evaluate:
