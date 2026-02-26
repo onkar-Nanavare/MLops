@@ -11,8 +11,11 @@ on:
       - "src/app.py"
       - "requirements.txt"
 
-  schedule:
-    - cron: '30 3 * * *'
+  workflow_run:
+    workflows: ["Daily Scheduler"]   
+    types:
+      - completed
+   
   workflow_dispatch:
 
 jobs:

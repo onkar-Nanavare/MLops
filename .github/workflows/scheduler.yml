@@ -1,0 +1,13 @@
+name: Daily Scheduler
+
+on:
+  schedule:
+    - cron: '45 5 * * *' 
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dummy step
+        run: echo "Scheduler fired at 11:15 AM IST"
